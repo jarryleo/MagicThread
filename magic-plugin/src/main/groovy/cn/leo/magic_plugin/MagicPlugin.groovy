@@ -9,7 +9,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 
-class PermissionPlugin implements Plugin<Project> {
+class MagicPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         def hasApp = project.plugins.withType(AppPlugin)

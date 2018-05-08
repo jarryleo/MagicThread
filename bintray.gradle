@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 
 def baseUrl = 'https://github.com/jarryleo'
 def siteUrl = baseUrl
-def gitUrl = "${baseUrl}/AopSample"
+def gitUrl = "${baseUrl}/MagicThread"
 def issueUrl = "${baseUrl}/issues"
 
 install {
@@ -46,14 +46,14 @@ install {
 
 //配置上传Bintray相关信息
 bintray {
-    user = 'jarryleo'
+    user = 'xxxxxx'
     key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
     configurations = ['archives']
     pkg {
         repo = 'maven' // 上传到中央仓库的名称
-        name = 'permission-plug' // 上传到jcenter 的项目名称
-        desc = 'permission gradle' // 项目描述
+        name = 'magic-plugin' // 上传到jcenter 的项目名称
+        desc = 'magic thread gradle' // 项目描述
         websiteUrl = siteUrl
         issueTrackerUrl = issueUrl
         vcsUrl = gitUrl

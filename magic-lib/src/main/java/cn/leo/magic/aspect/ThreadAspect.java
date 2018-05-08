@@ -1,5 +1,7 @@
 package cn.leo.magic.aspect;
 
+import android.util.Log;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -32,15 +34,18 @@ public class ThreadAspect {
     @Around("methodRunOnUIThread()")
     public void aroundJoinPointUI(final ProceedingJoinPoint joinPoint) throws Throwable {
         joinPoint.proceed();
+        Log.e("----", "methodRunOnUIThread");
     }
 
     @Around("methodRunOnIOThread()")
     public void aroundJoinPointIO(final ProceedingJoinPoint joinPoint) throws Throwable {
         joinPoint.proceed();
+        Log.e("----", "methodRunOnIOThread");
     }
 
     @Around("methodRunOnBackGround()")
     public void aroundJoinPointBack(final ProceedingJoinPoint joinPoint) throws Throwable {
         joinPoint.proceed();
+        Log.e("----", "methodRunOnBackGround");
     }
 }
