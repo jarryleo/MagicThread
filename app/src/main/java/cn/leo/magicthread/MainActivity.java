@@ -1,11 +1,13 @@
 package cn.leo.magicthread;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import cn.leo.magic.annotation.RunOnIOThread;
+import cn.leo.permission.PermissionRequest;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @RunOnIOThread
     private void test() {
