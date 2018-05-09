@@ -1,11 +1,11 @@
 package cn.leo.magic.aspect;
 
-import android.util.Log;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+
+import cn.leo.magic.thread.ThreadController;
 
 /**
  * Created by Leo on 2018/5/2.
@@ -33,19 +33,43 @@ public class ThreadAspect {
 
     @Around("methodRunOnUIThread()")
     public void aroundJoinPointUI(final ProceedingJoinPoint joinPoint) throws Throwable {
-        joinPoint.proceed();
-        Log.e("----", "methodRunOnUIThread");
+        ThreadController.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
     }
 
     @Around("methodRunOnIOThread()")
     public void aroundJoinPointIO(final ProceedingJoinPoint joinPoint) throws Throwable {
-        joinPoint.proceed();
-        Log.e("----", "methodRunOnIOThread");
+        ThreadController.runOnIOThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
     }
 
     @Around("methodRunOnBackGround()")
     public void aroundJoinPointBack(final ProceedingJoinPoint joinPoint) throws Throwable {
-        joinPoint.proceed();
-        Log.e("----", "methodRunOnBackGround");
+        ThreadController.runOnBackThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
     }
 }
