@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'cn.leo.plugin.magic'
+//apply plugin: 'cn.leo.plugin.magic'
 
 android {
     compileSdkVersion 26
@@ -29,7 +29,7 @@ dependencies {
     implementation project(':magic-lib')
 }
 
-buildscript {
+/*buildscript {
     repositories {
         jcenter()
         maven{ url 'https://dl.bintray.com/jarryleo/maven'}
@@ -37,5 +37,5 @@ buildscript {
     dependencies {
         classpath 'cn.leo.plugin:magic-plugin:1.0.0'
     }
-}
+}*/
 
