@@ -26,10 +26,10 @@ example:
 Add it in your root build.gradle at the end of repositories:
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-	  }
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
 }
 ```
 #### Step 2. Add the dependency
@@ -51,3 +51,42 @@ buildscript {
     }
 }
 ```
+
+### 小贴士
+
+在 app 的 build 依赖里再加一个依赖：
+
+```
+implementation 'com.github.jarryleo:AopSample:v3.0'
+```
+## 即可使用安卓纯注解动态权限申请框架
+
+在需要权限的方法上打上注解，全自动处理动态权限各种问题：
+
+自动处理用户同意/拒绝操作，自动处理用户拒绝并勾选不在提示后的 弹框提示，并跳转到设置界面引导用户开启权限
+
+用户在设置界面返回后自动处理  设置界面操作的结果，
+
+兼容国产rom
+
+#### 使用示例：
+
+单个权限申请
+```
+@PermissionRequest(Manifest.permission.CAMERA)
+public void testPermission() {
+        //执行权限申请通过后的业务逻辑
+}
+```
+
+多个权限同时申请
+```
+@PermissionRequest({Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE})
+public void testPermission() {
+        //执行权限申请通过后的业务逻辑
+}
+```
+### 注意:只能在Fragment(v4)和FragmentActivity 以及它们的子类 中使用
+
+
