@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'cn.leo.plugin.magic'
+apply plugin: 'cn.leo.plugin.magic'
 
 android {
     compileSdkVersion 26
@@ -26,10 +26,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':magic-lib')
+    //implementation project(':magic-lib')
+    implementation 'com.github.jarryleo:MagicThread:v1.0'
 }
 
-/*buildscript {
+buildscript {
     repositories {
         jcenter()
         maven{ url 'https://dl.bintray.com/jarryleo/maven'}
@@ -37,5 +38,5 @@ dependencies {
     dependencies {
         classpath 'cn.leo.plugin:magic-plugin:1.0.0'
     }
-}*/
+}
 
