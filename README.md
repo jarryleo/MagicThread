@@ -44,6 +44,7 @@ dependencies {
 buildscript {
     repositories {
         jcenter()
+	google()
         maven{ url 'https://dl.bintray.com/jarryleo/maven'}
     }
     dependencies {
