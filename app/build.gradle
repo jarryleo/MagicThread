@@ -27,9 +27,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    //implementation project(':magic-lib')
+    implementation project(':magic-lib')
     //纯注解切换线程依赖
-    implementation 'com.github.jarryleo:MagicThread:v1.0'
+    //implementation 'com.github.jarryleo:MagicThread:v1.0'
     //纯注解动态权限申请依赖
     implementation 'com.github.jarryleo:AopSample:v3.0'
 }

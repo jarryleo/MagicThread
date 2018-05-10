@@ -3,6 +3,7 @@ package cn.leo.magic.thread;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 
 /**
  * Created by Leo on 2018/5/9.
@@ -19,15 +20,19 @@ public class ThreadController {
         mUIHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static void runOnUIThread(Runnable runnable) {
+    public static void runOnUIThread(MagicRunnable runnable) {
         mUIHandler.post(runnable);
     }
 
-    public static void runOnIOThread(Runnable runnable) {
+    public static void runOnIOThread(MagicRunnable runnable) {
         ThreadPool.execute(runnable);
     }
 
-    public static void runOnBackThread(Runnable runnable) {
+    public static void runOnBackThread(MagicRunnable runnable) {
         mBackHandler.post(runnable);
+    }
+
+    public static void removeTask(MagicRunnable runnable) {
+        runnable.stop();
     }
 }
