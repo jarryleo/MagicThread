@@ -47,7 +47,7 @@ allprojects {
 apply plugin: 'cn.leo.plugin.magic'
 ...
 dependencies {
-	  implementation 'com.github.jarryleo:MagicThread:v1.0'
+	  implementation 'com.github.jarryleo:MagicThread:v2.0'
 }
 //plugin repository
 buildscript {
@@ -61,6 +61,19 @@ buildscript {
     }
 }
 ```
+### 关于子线程在activity和fragment中进行耗时操作导致的内存泄漏，本框架提供解决办法：
+
+在耗时操作的循环体中加入以下代码：
+```
+if (Thread.currentThread().isInterrupted()) return;
+```
+> 如果是采用休眠的耗时操作，请在捕获InterruptedException异常后跳出循环
+
+#### 注意：
+只在注解 @RunOnIOThread 的子线程中有效，利用了安卓新特性Lifecycle
+
+其它2个注解不适合做耗时操作，不做处理
+
 
 ### 小贴士
 
