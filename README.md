@@ -2,12 +2,21 @@
 安卓端、纯注解使用的线程切换框架
 
 ### how to use
+#### 一个注解搞定线程切换
+
 example:
 ```
-    @RunOnIOThread
-    private void test() {
-        String name = Thread.currentThread().getName();
-        Log.e("current thread name:", name);
+   @RunOnIOThread
+    public void progress() {
+        for (int i = 0; i <= 100; i++) {
+            showProgress(i);
+            SystemClock.sleep(1000);
+        }
+    }
+
+    @RunOnUIThread
+    private void showProgress(int progress) {
+        mTvTest.setText(progress + "%");
     }
 ```
 ### 框架提供3种线程注解：
