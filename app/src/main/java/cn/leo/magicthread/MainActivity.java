@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @RunOnIOThread
     public void progress() {
         for (int i = 0; i <= 100; i++) {
+            //处理内存泄漏
             if (Thread.currentThread().isInterrupted()) return;
             showProgress(i);
             SystemClock.sleep(1000);
