@@ -6,7 +6,7 @@
 
 example:
 ```
-   @RunOnIOThread
+    @RunOnIOThread
     public void progress() {
         for (int i = 0; i <= 100; i++) {
             showProgress(i);
