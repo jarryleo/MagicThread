@@ -34,15 +34,4 @@ dependencies {
     implementation 'com.github.jarryleo:AopSample:v3.0'
 }
 
-//插件需要的框架仓库
-buildscript {
-    repositories {
-        jcenter()
-        google()
-        maven { url 'https://dl.bintray.com/jarryleo/maven' }
-    }
-    dependencies {
-        classpath 'cn.leo.plugin:magic-plugin:1.0.0'
-    }
-}
 

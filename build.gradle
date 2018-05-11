@@ -11,6 +11,7 @@ buildscript {
         // 将项目发布到JCenter 所需要的jar   添加依赖
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'cn.leo.plugin:magic-plugin:1.0.0'
     }
 }
 
