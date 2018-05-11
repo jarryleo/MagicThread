@@ -3,7 +3,6 @@ package cn.leo.magic.thread;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.util.Log;
 
 /**
  * Created by Leo on 2018/5/9.
@@ -33,6 +32,7 @@ public class ThreadController {
     }
 
     public static void removeTask(MagicRunnable runnable) {
+        ThreadPool.cancel(runnable);
         runnable.stop();
     }
 }
