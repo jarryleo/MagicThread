@@ -27,9 +27,8 @@ example:
 
 > @RunOnBackGround  (被注解的方法在后台线程执行，所有被注解的方法都在同一个线程，队列执行，不适合耗时操作)
 
-
-### To get a Git project into your build:
-
+### 依赖方法:
+#### To get a Git project into your build:
 #### Step 1. Add the JitPack repository to your build file
 1.在全局build里面添加下面github仓库地址
 Add it in your root build.gradle at the end of repositories:
