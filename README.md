@@ -34,6 +34,13 @@ example:
 1.在全局build里面添加下面github仓库地址
 Add it in your root build.gradle at the end of repositories:
 ```
+buildscript {
+    ...
+    dependencies {
+	...
+        classpath 'cn.leo.plugin:magic-plugin:1.0.0'
+    }
+}
 allprojects {
 	repositories {
 		...
@@ -41,24 +48,15 @@ allprojects {
 	}
 }
 ```
+google()和jcenter()这两个仓库一般是默认的，如果没有请加上
+
 #### Step 2. Add the dependency
 2.在app的build里面添加插件，依赖，和插件的仓库地址
 ```
 apply plugin: 'cn.leo.plugin.magic'
 ...
 dependencies {
-	  implementation 'com.github.jarryleo:MagicThread:v2.0'
-}
-//plugin repository
-buildscript {
-    repositories {
-        jcenter()
-	google()
-        maven{ url 'https://dl.bintray.com/jarryleo/maven'}
-    }
-    dependencies {
-        classpath 'cn.leo.plugin:magic-plugin:1.0.0'
-    }
+	  implementation 'com.github.jarryleo:MagicThread:v2.1'
 }
 ```
 ### 关于子线程在activity和fragment中进行耗时操作导致的内存泄漏，本框架提供解决办法：
