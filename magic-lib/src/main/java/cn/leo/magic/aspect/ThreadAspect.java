@@ -54,7 +54,7 @@ public class ThreadAspect {
             ThreadController.runOnBackThread(getRunnable(joinPoint));
     }
 
-    private MagicRunnable getIORunnable(final ProceedingJoinPoint joinPoint) {
+    public MagicRunnable getIORunnable(final ProceedingJoinPoint joinPoint) {
         final Object target = joinPoint.getTarget();
         MagicRunnable runnable = new MagicRunnable() {
             @Override
@@ -76,7 +76,7 @@ public class ThreadAspect {
         return runnable;
     }
 
-    private MagicRunnable getRunnable(final ProceedingJoinPoint joinPoint) {
+    public MagicRunnable getRunnable(final ProceedingJoinPoint joinPoint) {
         return new MagicRunnable() {
             @Override
             public void run() {

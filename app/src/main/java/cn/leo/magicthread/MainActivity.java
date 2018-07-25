@@ -3,6 +3,7 @@ package cn.leo.magicthread;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
     public void progress() {
         for (int i = 0; i <= 100; i++) {
             //处理内存泄漏
-            if (Thread.currentThread().isInterrupted()) return;
+            if (Thread.currentThread().isInterrupted()) break;
+            Log.e("-----", "progress: " + i);
             showProgress(i);
             SystemClock.sleep(1000);
         }
+        Log.e("-----", "跳出循环");
     }
 
     @RunOnUIThread
