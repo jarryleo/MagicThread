@@ -80,6 +80,7 @@ if (Thread.currentThread().isInterrupted()) return;
 
 其它2个注解不适合做耗时操作，不做处理
 
+##### 请勿把注解打在有返回值的方法上，否则会失效
 
 ### 小贴士
 
