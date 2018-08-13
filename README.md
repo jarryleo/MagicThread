@@ -87,7 +87,7 @@ if (Thread.currentThread().isInterrupted()) return;
 在 app 的 build 依赖里再加一个依赖：
 
 ```
-implementation 'com.github.jarryleo:MagicPermission:v1.1'
+implementation 'com.github.jarryleo:MagicPermission:v1.3'
 ```
 ## 即可使用安卓纯注解动态权限申请框架
 
