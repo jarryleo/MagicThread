@@ -5,7 +5,8 @@ import android.os.HandlerThread;
 import android.os.Looper;
 
 /**
- * Created by Leo on 2018/5/9.
+ * @author Leo
+ * @date 2018/5/9
  */
 
 public class ThreadController {
@@ -24,7 +25,11 @@ public class ThreadController {
     }
 
     public static void runOnIOThread(MagicRunnable runnable) {
-        ThreadPool.execute(runnable);
+        IOThreadPool.execute(runnable);
+    }
+
+    public static void runOnCalcThread(MagicRunnable runnable) {
+        CalcThreadPool.execute(runnable);
     }
 
     public static void runOnBackThread(MagicRunnable runnable) {
@@ -32,7 +37,8 @@ public class ThreadController {
     }
 
     public static void removeTask(MagicRunnable runnable) {
-        ThreadPool.cancel(runnable);
+        IOThreadPool.cancel(runnable);
+        CalcThreadPool.cancel(runnable);
         runnable.stop();
     }
 }

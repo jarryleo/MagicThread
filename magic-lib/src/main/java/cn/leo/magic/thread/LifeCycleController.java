@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by Leo on 2018/5/9.
+ *
+ * @author Leo
+ * @date 2018/5/9
  */
 
 public class LifeCycleController implements LifecycleObserver {

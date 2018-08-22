@@ -1,8 +1,10 @@
 package cn.leo.magic.aspect;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.util.Log;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,6 +24,8 @@ public class ThreadAspect {
             "execution(@cn.leo.magic.annotation.RunOnUIThread * *(..))";
     private static final String IO_THREAD =
             "execution(@cn.leo.magic.annotation.RunOnIOThread * *(..))";
+    private static final String CALC_THREAD =
+            "execution(@cn.leo.magic.annotation.RunOnCalcThread * *(..))";
     private static final String BACK_THREAD =
             "execution(@cn.leo.magic.annotation.RunOnBackGround * *(..))";
 
@@ -33,14 +37,19 @@ public class ThreadAspect {
     public void methodRunOnIOThread() {
     }
 
+    @Pointcut(CALC_THREAD)
+    public void methodRunOnCalcThread() {
+    }
+
     @Pointcut(BACK_THREAD)
     public void methodRunOnBackGround() {
     }
 
     @Around("methodRunOnUIThread()")
     public void aroundJoinPointUI(final ProceedingJoinPoint joinPoint) throws Throwable {
-        if (!Thread.currentThread().isInterrupted())
+        if (!Thread.currentThread().isInterrupted()) {
             ThreadController.runOnUIThread(getRunnable(joinPoint));
+        }
     }
 
     @Around("methodRunOnIOThread()")
@@ -48,10 +57,24 @@ public class ThreadAspect {
         ThreadController.runOnIOThread(getIORunnable(joinPoint));
     }
 
+    @Around("methodRunOnCalcThread()")
+    public void aroundJoinPointCalc(final ProceedingJoinPoint joinPoint) throws Throwable {
+        ThreadController.runOnCalcThread(getIORunnable(joinPoint));
+    }
+
     @Around("methodRunOnBackGround()")
     public void aroundJoinPointBack(final ProceedingJoinPoint joinPoint) throws Throwable {
-        if (!Thread.currentThread().isInterrupted())
+        if (!Thread.currentThread().isInterrupted()) {
             ThreadController.runOnBackThread(getRunnable(joinPoint));
+        }
+    }
+
+    @AfterReturning(pointcut = "methodRunOnIOThread()",
+            returning = "retVal")
+    public void afterJoinPointIO(Object retVal) {
+        if (retVal != null) {
+            Log.e("MagicThread:", "线程转换注解的方法不能有返回值");
+        }
     }
 
     public MagicRunnable getIORunnable(final ProceedingJoinPoint joinPoint) {
@@ -61,10 +84,10 @@ public class ThreadAspect {
             public void run() {
                 super.run();
                 try {
-                    joinPoint.proceed();
                     if (target instanceof LifecycleOwner) {
                         mLifeCycleController.unSubscribe((LifecycleOwner) target, this);
                     }
+                    joinPoint.proceed();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -80,6 +103,7 @@ public class ThreadAspect {
         return new MagicRunnable() {
             @Override
             public void run() {
+                super.run();
                 try {
                     joinPoint.proceed();
                 } catch (Throwable throwable) {

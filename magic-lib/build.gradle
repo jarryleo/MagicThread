@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'cn.leo.plugin.magic'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 15
@@ -24,5 +24,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }

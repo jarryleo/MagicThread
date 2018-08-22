@@ -23,16 +23,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progress();
+                Log.e("-----", "跑完了");
             }
         });
     }
 
     @RunOnIOThread
     public void progress() {
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 10; i++) {
             //处理内存泄漏
             if (Thread.currentThread().isInterrupted()) break;
-            Log.e("-----", "progress: " + i);
+            Log.e("-----" + Thread.currentThread().getName(), "progress: " + i);
             showProgress(i);
             SystemClock.sleep(1000);
         }
