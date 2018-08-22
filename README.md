@@ -58,7 +58,7 @@ apply plugin: 'android-aspectjx'  //kotlin 用这个，编译速度会慢点
 ...
 dependencies {
 	...
-	implementation 'com.github.jarryleo:MagicThread:v2.1'
+	implementation 'com.github.jarryleo:MagicThread:v2.2'
 }
 ```
 
@@ -80,13 +80,14 @@ if (Thread.currentThread().isInterrupted()) return;
 
 其它2个注解不适合做耗时操作，不做处理
 
+##### 请勿把注解打在有返回值的方法上，否则会失效
 
 ### 小贴士
 
 在 app 的 build 依赖里再加一个依赖：
 
 ```
-implementation 'com.github.jarryleo:MagicPermission:v1.1'
+implementation 'com.github.jarryleo:MagicPermission:v1.3'
 ```
 ## 即可使用安卓纯注解动态权限申请框架
 
