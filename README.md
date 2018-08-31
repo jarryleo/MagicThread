@@ -80,11 +80,11 @@ if (Thread.currentThread().isInterrupted()) return;
 > 如果是采用休眠的耗时操作，请在捕获InterruptedException异常后跳出循环
 
 #### 注意：
-只在注解 @RunOnIOThread 的子线程中有效，利用了安卓新特性Lifecycle
+只在注解 @RunOnIOThread 和 @RunOnCalcThread 的子线程中有效，利用了安卓新特性Lifecycle
 
 其它2个注解不适合做耗时操作，不做处理
 
-##### 请勿把注解打在有返回值的方法上，否则会失效
+##### 请勿把注解打在有返回值的方法上，否则会失效!!!!
 
 ### 小贴士
 
