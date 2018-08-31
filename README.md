@@ -22,8 +22,11 @@ example:
 ### 框架提供4种线程注解：
 
 > @RunOnUIThread    (被注解的方法在UI线程执行)
+
 > @RunOnIOThread    (被注解的方法在子线程执行，适合IO密集型耗时操作(文件读写,网络请求))
+
 > @RunOnCalcThread  (被注解的方法在子线程执行，适合计算密集型耗时操作(大量消耗CPU的计算))
+
 > @RunOnBackGround  (被注解的方法在后台线程执行，所有被注解的方法都在同一个线程，队列执行，不适合耗时操作)
 
 > @RunOnUIThread 和 @RunOnBackGround 增加参数,为延时执行,单位毫秒值
