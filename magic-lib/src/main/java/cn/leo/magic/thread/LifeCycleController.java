@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * @author Leo
  * @date 2018/5/9
  */
 
 public class LifeCycleController implements LifecycleObserver {
 
+
     private static ConcurrentHashMap<LifecycleOwner, List<MagicRunnable>> mTasks = new ConcurrentHashMap<>();
 
-    public void subscribe(LifecycleOwner lifecycleOwner, MagicRunnable runnable) {
+    public synchronized void subscribe(LifecycleOwner lifecycleOwner, MagicRunnable runnable) {
         lifecycleOwner.getLifecycle().addObserver(this);
-        if (!mTasks.contains(lifecycleOwner)) {
+        if (!mTasks.containsKey(lifecycleOwner)) {
             List<MagicRunnable> runnableList = Collections.synchronizedList(new ArrayList<MagicRunnable>());
             runnableList.add(runnable);
             mTasks.put(lifecycleOwner, runnableList);
@@ -32,15 +32,15 @@ public class LifeCycleController implements LifecycleObserver {
         }
     }
 
-    public void unSubscribe(LifecycleOwner lifecycleOwner, MagicRunnable runnable) {
-        if (mTasks.contains(lifecycleOwner)) {
+    public synchronized void unSubscribe(LifecycleOwner lifecycleOwner, MagicRunnable runnable) {
+        if (mTasks.containsKey(lifecycleOwner)) {
             List<MagicRunnable> runnableList = mTasks.get(lifecycleOwner);
             runnableList.remove(runnable);
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onDestroy(LifecycleOwner source) {
+    public synchronized void onDestroy(LifecycleOwner source) {
         List<MagicRunnable> runnableList = mTasks.get(source);
         for (MagicRunnable runnable : runnableList) {
             ThreadController.removeTask(runnable);

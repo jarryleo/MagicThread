@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import cn.leo.magic.annotation.RunOnIOThread;
+import cn.leo.magic.annotation.RunOnCalcThread;
 import cn.leo.magic.annotation.RunOnUIThread;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,15 +25,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progress();
                 Log.e("-----", "跑完了");
+                testDelay();
             }
         });
     }
 
-    @RunOnIOThread
+    @RunOnCalcThread
     public void progress() {
         for (int i = 0; i <= 10; i++) {
             //处理内存泄漏
-            if (Thread.currentThread().isInterrupted()) break;
+            if (Thread.currentThread().isInterrupted()) {
+                break;
+            }
             Log.e("-----" + Thread.currentThread().getName(), "progress: " + i);
             showProgress(i);
             SystemClock.sleep(1000);
@@ -43,5 +47,10 @@ public class MainActivity extends AppCompatActivity {
     @RunOnUIThread
     private void showProgress(int progress) {
         mTvTest.setText(progress + "%");
+    }
+
+    @RunOnUIThread(5000)
+    public void testDelay() {
+        Toast.makeText(this, "延迟成功", Toast.LENGTH_SHORT).show();
     }
 }

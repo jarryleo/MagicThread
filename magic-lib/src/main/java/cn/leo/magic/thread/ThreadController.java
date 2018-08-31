@@ -20,8 +20,12 @@ public class ThreadController {
         mUIHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static void runOnUIThread(MagicRunnable runnable) {
-        mUIHandler.post(runnable);
+    public static void runOnUIThread(MagicRunnable runnable, int delayMillis) {
+        if (delayMillis > 0) {
+            mUIHandler.postDelayed(runnable, delayMillis);
+        } else {
+            mUIHandler.post(runnable);
+        }
     }
 
     public static void runOnIOThread(MagicRunnable runnable) {
@@ -32,11 +36,17 @@ public class ThreadController {
         CalcThreadPool.execute(runnable);
     }
 
-    public static void runOnBackThread(MagicRunnable runnable) {
-        mBackHandler.post(runnable);
+    public static void runOnBackThread(MagicRunnable runnable, int delayMillis) {
+        if (delayMillis > 0) {
+            mBackHandler.postDelayed(runnable, delayMillis);
+        } else {
+            mBackHandler.post(runnable);
+        }
     }
 
     public static void removeTask(MagicRunnable runnable) {
+        mUIHandler.removeCallbacks(runnable);
+        mBackHandler.removeCallbacks(runnable);
         IOThreadPool.cancel(runnable);
         CalcThreadPool.cancel(runnable);
         runnable.stop();

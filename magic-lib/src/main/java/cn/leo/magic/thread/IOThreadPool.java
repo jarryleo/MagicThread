@@ -2,6 +2,7 @@ package cn.leo.magic.thread;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -57,6 +58,7 @@ public class IOThreadPool {
                     TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
         }
         THREAD_POOL_EXECUTOR.execute(run);
+
     }
 
     /**

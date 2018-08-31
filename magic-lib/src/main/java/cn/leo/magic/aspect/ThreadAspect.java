@@ -8,7 +8,12 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.reflect.Method;
+
+import cn.leo.magic.annotation.RunOnBackGround;
+import cn.leo.magic.annotation.RunOnUIThread;
 import cn.leo.magic.thread.LifeCycleController;
 import cn.leo.magic.thread.MagicRunnable;
 import cn.leo.magic.thread.ThreadController;
@@ -46,26 +51,34 @@ public class ThreadAspect {
     }
 
     @Around("methodRunOnUIThread()")
-    public void aroundJoinPointUI(final ProceedingJoinPoint joinPoint) throws Throwable {
+    public void aroundJoinPointUI(final ProceedingJoinPoint joinPoint) {
         if (!Thread.currentThread().isInterrupted()) {
-            ThreadController.runOnUIThread(getRunnable(joinPoint));
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            Method method = signature.getMethod();
+            RunOnUIThread annotation = method.getAnnotation(RunOnUIThread.class);
+            int delayMillis = annotation.value();
+            ThreadController.runOnUIThread(getRunnable(joinPoint), delayMillis);
         }
     }
 
     @Around("methodRunOnIOThread()")
-    public void aroundJoinPointIO(final ProceedingJoinPoint joinPoint) throws Throwable {
-        ThreadController.runOnIOThread(getIORunnable(joinPoint));
+    public void aroundJoinPointIO(final ProceedingJoinPoint joinPoint) {
+        ThreadController.runOnIOThread(getRunnable(joinPoint));
     }
 
     @Around("methodRunOnCalcThread()")
-    public void aroundJoinPointCalc(final ProceedingJoinPoint joinPoint) throws Throwable {
-        ThreadController.runOnCalcThread(getIORunnable(joinPoint));
+    public void aroundJoinPointCalc(final ProceedingJoinPoint joinPoint) {
+        ThreadController.runOnCalcThread(getRunnable(joinPoint));
     }
 
     @Around("methodRunOnBackGround()")
-    public void aroundJoinPointBack(final ProceedingJoinPoint joinPoint) throws Throwable {
+    public void aroundJoinPointBack(final ProceedingJoinPoint joinPoint) {
         if (!Thread.currentThread().isInterrupted()) {
-            ThreadController.runOnBackThread(getRunnable(joinPoint));
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            Method method = signature.getMethod();
+            RunOnBackGround annotation = method.getAnnotation(RunOnBackGround.class);
+            int delayMillis = annotation.value();
+            ThreadController.runOnBackThread(getRunnable(joinPoint), delayMillis);
         }
     }
 
@@ -77,17 +90,17 @@ public class ThreadAspect {
         }
     }
 
-    public MagicRunnable getIORunnable(final ProceedingJoinPoint joinPoint) {
+    public MagicRunnable getRunnable(final ProceedingJoinPoint joinPoint) {
         final Object target = joinPoint.getTarget();
         MagicRunnable runnable = new MagicRunnable() {
             @Override
             public void run() {
                 super.run();
                 try {
+                    joinPoint.proceed();
                     if (target instanceof LifecycleOwner) {
                         mLifeCycleController.unSubscribe((LifecycleOwner) target, this);
                     }
-                    joinPoint.proceed();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -99,17 +112,4 @@ public class ThreadAspect {
         return runnable;
     }
 
-    public MagicRunnable getRunnable(final ProceedingJoinPoint joinPoint) {
-        return new MagicRunnable() {
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    joinPoint.proceed();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
-        };
-    }
 }
