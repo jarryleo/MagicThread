@@ -29,7 +29,7 @@ example:
 
 > @RunOnBackGround  (被注解的方法在后台线程执行，所有被注解的方法都在同一个线程，队列执行，不适合耗时操作)
 
-> @RunOnUIThread 和 @RunOnBackGround 增加参数,为延时执行,单位毫秒值
+> @RunOnUIThread(5000) 和 @RunOnBackGround(5000) 增加参数,为延时执行,单位毫秒值
 
 ### 依赖方法:
 #### To get a Git project into your build:
@@ -91,7 +91,7 @@ if (Thread.currentThread().isInterrupted()) return;
 在 app 的 build 依赖里再加一个依赖：
 
 ```
-implementation 'com.github.jarryleo:MagicPermission:v1.3'
+implementation 'com.github.jarryleo:MagicPermission:v1.4'
 ```
 ## 即可使用安卓纯注解动态权限申请框架
 
